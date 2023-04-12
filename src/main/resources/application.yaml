@@ -13,7 +13,26 @@ spring:
     name: edge-service
   lifecycle:
     timeout-per-shutdown-phase: 15s
-
+  config:
+    import: 'optional:configserver:'
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: supplier-service
+          uri: ${SUPPLIER_SERVICE_URL:http://localhost:9003}/orders
+          predicates:
+            - Path=/supply/**
+    config:
+      enabled: true
+      uri: ${CONFIG_SERVICE_URL:http://localhost:9001}
+      fail-fast: true
+      retry:
+        max-attempts: 20
+        max-interval: 10000
+        initial-interval: 3000
+        multiplier: 1.3
 logging:
   pattern:
     level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
@@ -42,3 +61,12 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:9000/eureka/}
+  instance:
+    lease-expiration-duration-in-seconds: 3
+    lease-renewal-interval-in-seconds: 1
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${random.value}
