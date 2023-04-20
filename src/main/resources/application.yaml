@@ -20,8 +20,8 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: supplier-service
-          uri: ${SUPPLIER_SERVICE_URL:http://localhost:9003}/orders
+        - id: manager-service
+          uri: ${MANAGER_SERVICE_URL:http://localhost:9003}/crawlers
           predicates:
             - Path=/supply/**
     config:

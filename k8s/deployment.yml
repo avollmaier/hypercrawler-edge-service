@@ -35,8 +35,8 @@ spec:
               value: http://discovery-service:9000/eureka/
             - name: CONFIG_SERVICE_URL
               value: http://config-service:9001/
-            - name: SUPPLIER_SERVICE_URL
-              value: http://supplier-service:9003/
+            - name: MANAGER_SERVICE_URL
+              value: http://manager-service:9003/
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
