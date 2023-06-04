@@ -26,7 +26,7 @@ spring:
             - Path=/supply/**
     config:
       enabled: true
-      uri: ${CONFIG_SERVICE_URL:http://localhost:9001}
+      uri: ${CONFIG_SERVICE_URI:http://localhost:9001}
       fail-fast: true
       retry:
         max-attempts: 20
